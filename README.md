@@ -84,12 +84,11 @@
 
 기능별 브랜치와 Pull Request를 활용하여 개발합니다. 세부 운영 규칙은 팀 합의 후 확정합니다.
 
-- `main`: 안정적인 통합 코드
-- `develop`: 기능 통합 및 테스트
-- `feature/<기능명>`: 기능별 작업 브랜치 (예: `feature/calendar`, `feature/record-crud`)
+- `main`: 팀의 공통 통합 브랜치 (PR로만 변경 사항 병합)
+- `feature/<기능명>`: `main`에서 분기하는 기능별 작업 브랜치 (예: `feature/calendar`, `feature/record-crud`)
 
 ```text
-feature/* → Pull Request → 코드 리뷰 → main
+main → feature/*에서 개발 → Pull Request → 코드 리뷰 → main에 Merge
 ```
 
 ## ✅ 개발 체크리스트
@@ -121,6 +120,122 @@ feature/* → Pull Request → 코드 리뷰 → main
 
 - 사용자별 로그인 및 기록 분리
 - 학습 타이머
+
+
+
+## 📝 Git Commit Convention
+
+팀원들이 변경 사항을 쉽게 이해할 수 있도록 **Conventional Commits 기반**의 커밋 메시지 규칙을 사용합니다.
+
+### 커밋 메시지 형식
+
+```text
+<type>: <변경 내용>
+```
+
+| Type | 의미 | 예시 |
+| --- | --- | --- |
+| `feat` | 새로운 기능 추가 | `feat: 날짜별 학습 기록 생성 기능 추가` |
+| `fix` | 버그 수정 | `fix: 윤년 달력 날짜 계산 오류 수정` |
+| `docs` | 문서 작성 및 수정 | `docs: README 협업 가이드 추가` |
+| `refactor` | 기능 변경 없는 코드 구조 개선 | `refactor: 기록 검색 로직 분리` |
+| `test` | 테스트 코드 추가 및 수정 | `test: 기록 삭제 테스트 추가` |
+| `style` | 코드 포맷 변경(동작 변경 없음) | `style: 들여쓰기 정리` |
+| `chore` | 설정·기타 유지보수 | `chore: gitignore 설정 추가` |
+
+**작성 규칙**
+- 한 커밋에는 가능하면 하나의 논리적 변경 사항만 담습니다.
+- 변경 내용을 이해할 수 있도록 구체적으로 작성합니다.
+- 커밋 메시지 언어는 **한국어**를 기본으로 합니다. `type`은 위 표의 영문 키워드를 사용합니다.
+- 커밋 전에 `git status`와 `git diff`로 변경 사항을 확인합니다.
+
+### 커밋 예시
+
+```bash
+git add src/
+git commit -m "feat: 학습 기록 수정 기능 구현"
+```
+
+## 🌿 브랜치 생성 및 Push 방법
+
+기능 개발은 최신 `main`에서 분기한 `feature/*` 브랜치에서 진행합니다. `main`에 직접 Push하지 않고 Pull Request(PR)를 통해 병합합니다.
+
+### 1. 최초 1회: 저장소 복제
+
+```bash
+git clone <REPOSITORY_URL>
+cd <REPOSITORY_DIRECTORY>
+```
+
+### 2. 최신 main 가져오기
+
+```bash
+git switch main
+git pull origin main
+```
+
+### 3. 새 기능 브랜치 생성 및 이동
+
+```bash
+git switch -c feature/calendar
+```
+
+예시 브랜치 이름: `feature/calendar`, `feature/record-crud`, `feature/search`, `feature/file-io`.
+
+### 4. 코드 수정 후 변경 사항 확인·커밋
+
+```bash
+git status
+git add .
+git commit -m "feat: 월별 캘린더 출력 기능 추가"
+```
+
+### 5. 원격 저장소에 브랜치 Push
+
+```bash
+git push -u origin feature/calendar
+```
+
+`-u`는 로컬 브랜치와 원격 브랜치의 추적 관계를 설정합니다. **해당 브랜치에서 최초 1회** 설정한 다음부터는 보통 아래처럼 Push하면 됩니다.
+
+```bash
+git add .
+git commit -m "fix: 달력 월 이동 오류 수정"
+git push
+```
+
+### 6. GitHub에서 Pull Request 생성
+
+1. GitHub 저장소의 **Pull requests → New pull request**를 클릭합니다.
+2. **base: `main`**, **compare: `feature/calendar`**로 선택합니다.
+3. 변경 내용과 테스트 결과를 작성한 뒤 PR을 생성합니다.
+4. 팀원의 코드 리뷰 및 승인 후 `main`에 Merge합니다.
+5. 병합 후 필요하다면 작업이 끝난 원격 기능 브랜치를 삭제합니다.
+
+### 7. 다음 기능을 시작할 때
+
+```bash
+git switch main
+git pull origin main
+git switch -c feature/search
+```
+
+**주의:** 기존 기능 브랜치에서 다음 기능 브랜치를 만들면 앞선 변경 사항까지 따라올 수 있으므로, 원칙적으로 최신 `main`에서 새 브랜치를 생성합니다.
+
+### 협업 명령어 빠른 참고
+
+| 명령어 | 용도 |
+| --- | --- |
+| `git branch` | 로컬 브랜치 확인 |
+| `git switch <브랜치명>` | 다른 브랜치로 이동 |
+| `git switch -c <브랜치명>` | 새 브랜치 생성 후 이동 |
+| `git status` | 변경 파일 및 현재 상태 확인 |
+| `git add <파일경로>` | 변경 사항 스테이징 |
+| `git commit -m "메시지"` | 변경 사항 커밋 |
+| `git push -u origin <브랜치명>` | 새 브랜치 최초 Push 및 추적 설정 |
+| `git push` | 추적 브랜치로 후속 Push |
+| `git pull origin main` | 원격 `main`의 최신 변경 사항 가져오기 |
+
 
 ---
 
