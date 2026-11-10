@@ -1,0 +1,8 @@
+# IntelliJ 개인 설정
+.idea/workspace.xml
+.idea/shelf/
+.idea/tasks.xml
+
+# Java 컴파일 결과
+out/
+*.class
