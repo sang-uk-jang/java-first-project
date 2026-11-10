@@ -5,10 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4fc3bed3-89a1-4463-a5de-4b3ecea3215d" name="변경" comment="">
-      <change afterPath="$PROJECT_DIR$/src/TestMain.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/UI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,7 +37,7 @@
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "git-widget-placeholder": "feat/UI-class",
+    "git-widget-placeholder": "refactor/initial__build",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/tkddn/Desktop/3학년 2학기/java_class/project/java-first-project",
@@ -160,7 +157,7 @@
       <workItem from="1793862674531" duration="2049000" />
       <workItem from="1794195002753" duration="50000" />
       <workItem from="1794307027092" duration="415000" />
-      <workItem from="1794307513132" duration="1249000" />
+      <workItem from="1794307513132" duration="1665000" />
     </task>
     <servers />
   </component>
