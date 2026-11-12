@@ -4,7 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4fc3bed3-89a1-4463-a5de-4b3ecea3215d" name="변경" comment="" />
+    <list default="true" id="4fc3bed3-89a1-4463-a5de-4b3ecea3215d" name="변경" comment="">
+      <change afterPath="$PROJECT_DIR$/res/2026 11 12.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/2027 1 12.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/CalFile.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/fileIO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestMain.java" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -18,52 +25,130 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;YunhoKang54&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/sang-uk-jang/java-first-project.git&quot;,
+    &quot;accountId&quot;: &quot;cebacddf-08fe-4914-a3e2-16ff60ea351b&quot;
+  }
+}</component>
+  <component name="NextEditCompletionFeaturesState">
+    <decayedCancelled>
+      <entry key="MS100" value="1.000431019510098" />
+      <entry key="MS500" value="1.2384067616090244" />
+      <entry key="S2" value="2.0809706052950463" />
+      <entry key="S5" value="2.5929821696896633" />
+      <entry key="S10" value="3.047754615997677" />
+      <entry key="S30" value="3.9663723264460917" />
+      <entry key="S60" value="4.5615431415908825" />
+      <entry key="M2" value="6.680416146433632" />
+      <entry key="M5" value="21.063556397110013" />
+      <entry key="M10" value="52.274372228306156" />
+      <entry key="M15" value="83.69097167233514" />
+      <entry key="M30" value="162.63982541237556" />
+      <entry key="H1" value="254.60223426598182" />
+      <entry key="H2" value="330.80803988793855" />
+      <entry key="H4" value="381.01224209573576" />
+      <entry key="D1" value="430.9783014452899" />
+      <entry key="W1" value="440.4028926062594" />
+    </decayedCancelled>
+    <decayedSelected>
+      <entry key="MS100" value="0.0" />
+      <entry key="MS500" value="7.577336841372507E-199" />
+      <entry key="S2" value="2.9503881049656514E-50" />
+      <entry key="S5" value="1.5416455618765314E-20" />
+      <entry key="S10" value="1.258517642871261E-10" />
+      <entry key="S30" value="7.537003560773098E-4" />
+      <entry key="S60" value="0.055325862991846414" />
+      <entry key="M2" value="0.6065163758305391" />
+      <entry key="M5" value="3.7770115905966124" />
+      <entry key="M10" value="9.98950353568994" />
+      <entry key="M15" value="15.96591486798717" />
+      <entry key="M30" value="29.786105461629813" />
+      <entry key="H1" value="44.32696360825171" />
+      <entry key="H2" value="55.54805111345746" />
+      <entry key="H4" value="62.640782409016424" />
+      <entry key="D1" value="69.50808752366095" />
+      <entry key="W1" value="70.78429679636164" />
+    </decayedSelected>
+    <decayedShown>
+      <entry key="MS100" value="0.7529662648017311" />
+      <entry key="MS500" value="1.1721492638305089" />
+      <entry key="S2" value="2.053189016687359" />
+      <entry key="S5" value="2.578355498544351" />
+      <entry key="S10" value="3.03698641564405" />
+      <entry key="S30" value="3.960215729284965" />
+      <entry key="S60" value="4.608871466567643" />
+      <entry key="M2" value="7.264397907445698" />
+      <entry key="M5" value="24.78615994969152" />
+      <entry key="M10" value="62.19084006363976" />
+      <entry key="M15" value="99.57859185038716" />
+      <entry key="M30" value="192.35160157705494" />
+      <entry key="H1" value="298.8727969366257" />
+      <entry key="H2" value="386.3202623293747" />
+      <entry key="H4" value="443.632661250708" />
+      <entry key="D1" value="500.4825958331765" />
+      <entry key="W1" value="511.1866368679658" />
+    </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
 }</component>
   <component name="ProjectId" id="3Lg53iApC2NchBf9361Y4Hs1yE7" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "git-widget-placeholder": "refactor/initial__build",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/tkddn/Desktop/3학년 2학기/java_class/project/java-first-project",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "onboarding.tips.debug.path": "C:/Users/tkddn/Desktop/3학년 2학기/java_class/project/java-first-project/src/Main.java",
-    "project.structure.last.edited": "프로젝트",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "vue.rearranger.settings.migration": "true",
-    "애플리케이션.TestMain.executor": "Run"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/file-IO&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/yunho/IdeaProjects/java-first-project/res&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/tkddn/Desktop/3학년 2학기/java_class/project/java-first-project/src/Main.java&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;프로젝트&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;,
+    &quot;애플리케이션.TestMain.executor&quot;: &quot;Run&quot;,
+    &quot;애플리케이션.fileIO.executor&quot;: &quot;Run&quot;
   }
-}]]></component>
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\yunho\IdeaProjects\java-first-project\res" />
+    </key>
+  </component>
   <component name="RunManager">
-    <configuration default="true" type="JetRunConfigurationType">
-      <module name="java-first-project" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="java-first-project" />
-      <option name="filePath" />
-      <method v="2" />
-    </configuration>
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="java-first-project" />
       <option name="ENV_FILES" value="" />
@@ -140,8 +225,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-30f59d01ecdd-26cb7f24e5b0-intellij.indexing.shared.core-IU-253.29346.240" />
-        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.29346.240" />
+        <option value="bundled-jdk-30f59d01ecdd-34e2839f716b-intellij.indexing.shared.core-IU-262.9437.185" />
+        <option value="bundled-js-predefined-d6986cc7102b-4abd2a77f808-JavaScript-IU-262.9437.185" />
       </set>
     </attachedChunks>
   </component>
