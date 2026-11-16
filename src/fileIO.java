@@ -1,10 +1,21 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
 public class fileIO {
+
+    public static boolean deleterow(int year, int month, int day, int id) {
+        //id로 row찾아서 삭제(구현해야함)
+        return true;
+    }
+
+    public boolean writeRecords(CalFile dayFile){
+        //txt에 작성하는 로직 필요.(구현해야함)
+        return true;
+    }
 
     static List<String> fileIn(String dirPath) {
         File dir = new File(dirPath);
@@ -30,40 +41,40 @@ public class fileIO {
         return filePathList;
     }
 
-    static CalFile[] fileReadIn(List<String> paths) {
-        CalFile[] calFiles = new CalFile[paths.size()]; // <- 이 배열에 txt파일 내용을 저장합니다.
-
-        for (int i = 0; i < paths.size(); i++) {
+    //날짜로 파일찾아서 CalFile 반환하기(구현해야함)
+    static CalFile fileRead(int year, int month, int day) {
+        CalFile readFile = null;
             try {
-                File file = new File(paths.get(i));
+                File file = new File("./res/" + year + month + day);
                 Scanner scanner = new Scanner(file);
 
                 if (scanner.hasNextInt()) {
-                    // 2. 첫 줄의 연, 월, 일, 행개수(txtRow) 순서대로 읽어온다
-                    int year = scanner.nextInt();
-                    int month = scanner.nextInt();
-                    int day = scanner.nextInt();
-                    int txtRow = scanner.nextInt();
+                    scanner.nextLine();
+                    //content읽어오기, 아래는 임시로 만든 것, while문으로 받아오기(쓰기한 형식에 따라 구현은 달라짐)
+                    String content = scanner.nextLine();
 
-                    // 3. CalFile 객체 생성 (전달받은 txtRow 크기만큼 배열 할당)
-                    calFiles[i] = new CalFile(year, month, day, txtRow);
+                    readFile = new CalFile(year, month, day, content);
 
-                    // 4. DoList이중배열에 플래너에 출력될 데이터를 채웁니다.
-                    for (int j = 0; j < txtRow; j++) {
-                        for (int k = 0; k < 4; k++) {
-                            if (scanner.hasNext()) {
-                                calFiles[i].DoList[j][k] = scanner.next();
-                            }
-                        }
-                    }
+                    //한행 읽어오기(아래는 임시로 만든것 구현은 해야함)
+                    Record row = new Record(1, "title", 20, "true");
+
+                    //DoList에 넣기
+                    readFile.DoList.add(row);
+
                 }
                 scanner.close();
 
             } catch (FileNotFoundException e) {
-                System.out.println("파일을 찾을 수 없습니다: " + paths.get(i));
             }
-        }
-        return calFiles;
+        return readFile;
     }
 
+    public void deleteFile(int year, int month, int day) {
+        //file 삭제 구현
+    }
+
+    public Record findRecord(int year, int month, int day, int id) {
+        //파일에서 Record 찾기 구현
+        return null;
+    }
 }

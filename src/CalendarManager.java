@@ -46,9 +46,10 @@ public class CalendarManager {
     }
 
     public boolean isValidDate(String date) {
+        //날짜 검증 테스트 필요(여러번 해보면서 함수가 제대로 동작하는지 확인해주세요)
         try {
             DateTimeFormatter formatter =
-                    DateTimeFormatter.ofPattern("yyyy-MM-dd")
+                    DateTimeFormatter.ofPattern("uuuu-MM-dd")
                             .withResolverStyle(ResolverStyle.STRICT);
 
             LocalDate parsedDate = LocalDate.parse(date, formatter);
