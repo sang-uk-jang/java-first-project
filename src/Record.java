@@ -1,11 +1,13 @@
 public class Record {
     int id;
     String title;
-    String content;
+    int miniute;
+    boolean check;
 
-    public Record(int id, String title, String content) {
+    public Record(int id, String title, int miniute, boolean check) {
         this.id = id;
         this.title = title;
-        this.content = content;
+        this.miniute = miniute;
+        this.check = check;
     }
 }

@@ -4,12 +4,9 @@ import java.util.List;
 
 public class StudyPlanner {
 
-    private List<StudyRecord> records;
     static public int count = 0;
 
-    public StudyPlanner() {
-        records = new ArrayList<>();
-    }
+    public StudyPlanner() {}
 
     public void addRecord(LocalDate date,
                           String title,
