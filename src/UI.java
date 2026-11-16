@@ -1,8 +1,6 @@
-import java.time.YearMonth;
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.Scanner;
-import java.time.format.DateTimeFormatter;
-import java.util.Locale;
 
 public class UI {
     public UI() {}

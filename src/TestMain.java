@@ -6,5 +6,4 @@ public class TestMain {
         ui.showMenu();
         ui.printDailyView(2026, 11, 10);
     }
-
 }
