@@ -2,7 +2,7 @@
 .idea/workspace.xml
 .idea/shelf/
 .idea/tasks.xml
-
+.idea/workspace.xml
 # Java 컴파일 결과
 out/
 *.class
