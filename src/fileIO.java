@@ -12,7 +12,6 @@ public class fileIO {
 
         if (dir.exists() && dir.isDirectory()) {
             File[] files = dir.listFiles();
-
             if (files != null) {
                 int fileCount = 0;
                 for (File file : files) {

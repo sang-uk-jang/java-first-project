@@ -6,6 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="4fc3bed3-89a1-4463-a5de-4b3ecea3215d" name="변경" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/CalFile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/CalFile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestMain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fileIO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fileIO.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,38 +25,101 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="NextEditCompletionFeaturesState">
+    <decayedCancelled>
+      <entry key="MS100" value="1.0382771353695195" />
+      <entry key="MS500" value="1.6679303728747077" />
+      <entry key="S2" value="2.4690296339985034" />
+      <entry key="S5" value="2.762554755118731" />
+      <entry key="S10" value="2.8766422003229377" />
+      <entry key="S30" value="3.0311421895304744" />
+      <entry key="S60" value="4.460588546429641" />
+      <entry key="M2" value="11.045241077663848" />
+      <entry key="M5" value="25.826168816271366" />
+      <entry key="M10" value="35.38911913307088" />
+      <entry key="M15" value="39.40362521933768" />
+      <entry key="M30" value="43.91961632287528" />
+      <entry key="H1" value="46.38502956512942" />
+      <entry key="H2" value="47.67326365127685" />
+      <entry key="H4" value="48.33174766740331" />
+      <entry key="D1" value="48.88794011148537" />
+      <entry key="W1" value="48.983974600527894" />
+    </decayedCancelled>
+    <decayedSelected>
+      <entry key="MS100" value="0.0" />
+      <entry key="MS500" value="0.0" />
+      <entry key="S2" value="0.0" />
+      <entry key="S5" value="0.0" />
+      <entry key="S10" value="0.0" />
+      <entry key="S30" value="0.0" />
+      <entry key="S60" value="0.0" />
+      <entry key="M2" value="0.0" />
+      <entry key="M5" value="0.0" />
+      <entry key="M10" value="0.0" />
+      <entry key="M15" value="0.0" />
+      <entry key="M30" value="0.0" />
+      <entry key="H1" value="0.0" />
+      <entry key="H2" value="0.0" />
+      <entry key="H4" value="0.0" />
+      <entry key="D1" value="0.0" />
+      <entry key="W1" value="0.0" />
+    </decayedSelected>
+    <decayedShown>
+      <entry key="MS100" value="0.7205721071909883" />
+      <entry key="MS500" value="1.2712144706574855" />
+      <entry key="S2" value="2.0632124398937717" />
+      <entry key="S5" value="2.5248043003256058" />
+      <entry key="S10" value="2.7406762922021755" />
+      <entry key="S30" value="2.979820629192019" />
+      <entry key="S60" value="4.4304805027053815" />
+      <entry key="M2" value="11.026389030299866" />
+      <entry key="M5" value="25.81655192458491" />
+      <entry key="M10" value="35.38376512448604" />
+      <entry key="M15" value="39.399913023076195" />
+      <entry key="M30" value="43.91768246501634" />
+      <entry key="H1" value="46.38404190901985" />
+      <entry key="H2" value="47.67276447109346" />
+      <entry key="H4" value="48.33149671736844" />
+      <entry key="D1" value="48.88789809570928" />
+      <entry key="W1" value="48.983968593577416" />
+    </decayedShown>
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
 }</component>
   <component name="ProjectId" id="3Lg53iApC2NchBf9361Y4Hs1yE7" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feat/UI-class&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/tkddn/Desktop/3학년 2학기/java_class/project/java-first-project&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/tkddn/Desktop/3학년 2학기/java_class/project/java-first-project/src/Main.java&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;프로젝트&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;,
-    &quot;애플리케이션.TestMain.executor&quot;: &quot;Run&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "git-widget-placeholder": "feature/file-IO에 #6개",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/tkddn/Desktop/3학년 2학기/java_class/project/java-first-project",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "onboarding.tips.debug.path": "C:/Users/tkddn/Desktop/3학년 2학기/java_class/project/java-first-project/src/Main.java",
+    "project.structure.last.edited": "프로젝트",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "vue.rearranger.settings.migration": "true",
+    "애플리케이션.TestMain.executor": "Run",
+    "애플리케이션.fileIO.executor": "Run"
   }
-}</component>
+}]]></component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
