@@ -1,11 +1,11 @@
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class StudyPlanner {
 
     private List<StudyRecord> records;
+    static public int count = 0;
 
     public StudyPlanner() {
         records = new ArrayList<>();
@@ -20,7 +20,7 @@ public class StudyPlanner {
             return;
         }
 
-        String id = UUID.randomUUID().toString();
+        String id = String.valueOf(count++);
 
         StudyRecord record =
                 new StudyRecord(id, date, title, content);
