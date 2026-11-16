@@ -66,21 +66,4 @@ public class fileIO {
         return calFiles;
     }
 
-    static void main() {
-        CalFile[] calFiles = fileReadIn(fileIn("res"));
-
-        // 테스트 출력입니다.
-        for (CalFile cf : calFiles) {
-            if (cf != null) {
-                System.out.println("=== " + cf.year + "년 " + cf.month + "월 " + cf.day + "일 ===");
-                for (int j = 0; j < cf.DoList.length; j++) {
-                    System.out.println(cf.DoList[j][0] + " | " +
-                            cf.DoList[j][1] + " | " +
-                            cf.DoList[j][2] + " | " +
-                            cf.DoList[j][3]);
-                }
-                System.out.println();
-            }
-        }
-    }
 }
