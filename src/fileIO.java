@@ -1,80 +1,137 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
 public class fileIO {
 
+    // 1. 특정 날짜 파일에서 id로 row(Record)를 찾아 삭제 후 파일 다시 쓰기
     public static boolean deleterow(int year, int month, int day, int id) {
-        //id로 row찾아서 삭제(구현해야함)
-        return true;
-    }
-
-    public boolean writeRecords(CalFile dayFile){
-        //txt에 작성하는 로직 필요.(구현해야함)
-        return true;
-    }
-
-    static List<String> fileIn(String dirPath) {
-        File dir = new File(dirPath);
-        List<String> filePathList = new LinkedList<>();
-
-        if (dir.exists() && dir.isDirectory()) {
-            File[] files = dir.listFiles();
-
-            if (files != null) {
-                int fileCount = 0;
-                for (File file : files) {
-                    if (file.isFile()) {
-                        fileCount++;
-                        filePathList.add(file.getPath());
-                    }
-                }
-                System.out.println("res 폴더 안의 총 파일 개수: " + fileCount + "개\n");
-            }
-        } else {
-            System.out.println("디렉토리가 존재하지 않습니다: " + dirPath);
+        CalFile calFile = fileRead(year, month, day);
+        if (calFile == null || calFile.DoList == null) {
+            return false;
         }
 
-        return filePathList;
+        boolean removed = calFile.DoList.removeIf(record -> record.id == id);
+        if (removed) {
+            // 개수가 변경되었으므로 파일 전체를 갱신
+            return new fileIO().writeRecords(calFile);
+        }
+        return false;
     }
 
-    //날짜로 파일찾아서 CalFile 반환하기(구현해야함)
+    // 2. CalFile 객체를 받아 txt 파일에 포맷에 맞춰 작성
+    public boolean writeRecords(CalFile dayFile) {
+        String dirPath = "/res";
+        File dir = new File(dirPath);
+        if (!dir.exists()) {
+            dir.mkdirs(); // res 폴더가 없으면 생성
+        }
+
+        // 파일 이름 형식: "연도 월 일.txt" (예: "res/2026 11 12.txt")
+        String fileName = dirPath + "/" + dayFile.year + " " + dayFile.month + " " + dayFile.day + ".txt";
+
+        try (PrintWriter writer = new PrintWriter(new FileWriter(fileName))) {
+            // 첫 번째 줄: 연도 월 일 개수
+            int count = (dayFile.DoList != null) ? dayFile.DoList.size() : 0;
+            writer.println(dayFile.year + " " + dayFile.month + " " + dayFile.day + " " + count);
+
+            // 두 번째 줄: content
+            writer.println(dayFile.content != null ? dayFile.content : "");
+
+            // 세 번째 줄 이후: Record 목록 작성
+            if (dayFile.DoList != null) {
+                for (Record r : dayFile.DoList) {
+                    writer.println(r.id + " " + r.title + " " + r.miniute + " " + r.check);
+                }
+            }
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    // 3. 날짜로 파일 찾아서 CalFile 반환하기
     static CalFile fileRead(int year, int month, int day) {
         CalFile readFile = null;
-            try {
-                File file = new File("./res/" + year + month + day);
-                Scanner scanner = new Scanner(file);
+        try {
+            // 파일 이름 규칙에 맞게 경로 설정 (예:res/2026 11 12.txt)
+            File file = new File("res/" + year + " " + month + " " + day + ".txt");
+            Scanner scanner = new Scanner(file);
 
-                if (scanner.hasNextInt()) {
-                    scanner.nextLine();
-                    //content읽어오기, 아래는 임시로 만든 것, while문으로 받아오기(쓰기한 형식에 따라 구현은 달라짐)
-                    String content = scanner.nextLine();
+            if (scanner.hasNextInt()) {
+                int fYear = scanner.nextInt();
+                int fMonth = scanner.nextInt();
+                int fDay = scanner.nextInt();
+                int count = scanner.nextInt();
+                scanner.nextLine(); // 개행 문자 처리
 
-                    readFile = new CalFile(year, month, day, content);
-
-                    //한행 읽어오기(아래는 임시로 만든것 구현은 해야함)
-                    Record row = new Record(1, "title", 20, "true");
-
-                    //DoList에 넣기
-                    readFile.DoList.add(row);
-
+                // content 읽어오기
+                String content = "";
+                if (scanner.hasNextLine()) {
+                    content = scanner.nextLine();
                 }
-                scanner.close();
 
-            } catch (FileNotFoundException e) {
+                readFile = new CalFile(fYear, fMonth, fDay, content);
+                readFile.count = count;
+
+                // Record 목록 읽어오기
+                for (int i = 0; i < count && scanner.hasNextLine(); i++) {
+                    String line = scanner.nextLine().trim();
+                    if (line.isEmpty()) {
+                        i--; // 빈 줄인 경우 다시 반복
+                        continue;
+                    }
+
+                    String[] parts = line.split(" ", 4); // id, title, minute, check 분리
+                    if (parts.length >= 4) {
+                        int id = Integer.parseInt(parts[0]);
+                        String title = parts[1];
+                        int minute = Integer.parseInt(parts[2]);
+                        String check = parts[3];
+
+                        Record row = new Record(id, title, minute, check);
+                        readFile.DoList.add(row);
+                    }
+                }
             }
+            scanner.close();
+
+        } catch (FileNotFoundException e) {
+            System.out.println("해당 날짜의 파일이 존재하지 않습니다.");
+        }
         return readFile;
     }
 
+    // 4. 파일 삭제 구현
     public void deleteFile(int year, int month, int day) {
-        //file 삭제 구현
+        File file = new File("res/" + year + " " + month + " " + day + ".txt");
+        if (file.exists()) {
+            if (file.delete()) {
+                System.out.println("파일이 성공적으로 삭제되었습니다.");
+            } else {
+                System.out.println("파일 삭제에 실패했습니다.");
+            }
+        } else {
+            System.out.println("삭제할 파일이 존재하지 않습니다.");
+        }
     }
 
+    // 5. 파일에서 특정 Record 찾기 구현
     public Record findRecord(int year, int month, int day, int id) {
-        //파일에서 Record 찾기 구현
+        CalFile calFile = fileRead(year, month, day);
+        if (calFile != null && calFile.DoList != null) {
+            for (Record r : calFile.DoList) {
+                if (r.id == id) {
+                    return r;
+                }
+            }
+        }
         return null;
     }
 }
