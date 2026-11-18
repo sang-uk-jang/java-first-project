@@ -26,7 +26,7 @@ public class fileIO {
 
     // 2. CalFile 객체를 받아 txt 파일에 포맷에 맞춰 작성
     public boolean writeRecords(CalFile dayFile) {
-        String dirPath = "/res";
+        String dirPath = "res";
         File dir = new File(dirPath);
         if (!dir.exists()) {
             dir.mkdirs(); // res 폴더가 없으면 생성
@@ -40,13 +40,13 @@ public class fileIO {
             int count = (dayFile.DoList != null) ? dayFile.DoList.size() : 0;
             writer.println(dayFile.year + " " + dayFile.month + " " + dayFile.day + " " + count);
 
-            // 두 번째 줄: content
+            // 두 번째 줄: content (띄어쓰기가 있어도 그대로 한 줄로 저장)
             writer.println(dayFile.content != null ? dayFile.content : "");
 
-            // 세 번째 줄 이후: Record 목록 작성
+            // 세 번째 줄 이후: Record 목록 작성 (id | title | minute | check 형식)
             if (dayFile.DoList != null) {
                 for (Record r : dayFile.DoList) {
-                    writer.println(r.id + " " + r.title + " " + r.miniute + " " + r.check);
+                    writer.println(r.id + " | " + r.title + " | " + r.miniute + " | " + r.check);
                 }
             }
             return true;
@@ -56,11 +56,10 @@ public class fileIO {
         }
     }
 
-    // 3. 날짜로 파일 찾아서 CalFile 반환하기
+    // 3. 날짜로 파일 찾아서 CalFile 반환하기 (띄어쓰기 포함된 content와 " | " 구분자 안전 처리)
     static CalFile fileRead(int year, int month, int day) {
         CalFile readFile = null;
         try {
-            // 파일 이름 규칙에 맞게 경로 설정 (예:res/2026 11 12.txt)
             File file = new File("res/" + year + " " + month + " " + day + ".txt");
             Scanner scanner = new Scanner(file);
 
@@ -69,9 +68,13 @@ public class fileIO {
                 int fMonth = scanner.nextInt();
                 int fDay = scanner.nextInt();
                 int count = scanner.nextInt();
-                scanner.nextLine(); // 개행 문자 처리
 
-                // content 읽어오기
+                // 버퍼에 남아있는 줄바꿈 문자 제거
+                if (scanner.hasNextLine()) {
+                    scanner.nextLine();
+                }
+
+                // 두 번째 줄: content 읽어오기 (띄어쓰기 포함 전체 라인 보존)
                 String content = "";
                 if (scanner.hasNextLine()) {
                     content = scanner.nextLine();
@@ -80,7 +83,7 @@ public class fileIO {
                 readFile = new CalFile(fYear, fMonth, fDay, content);
                 readFile.count = count;
 
-                // Record 목록 읽어오기
+                // 세 번째 줄 이후: Record 목록 읽어오기 (" | " 기준 분리)
                 for (int i = 0; i < count && scanner.hasNextLine(); i++) {
                     String line = scanner.nextLine().trim();
                     if (line.isEmpty()) {
@@ -88,7 +91,8 @@ public class fileIO {
                         continue;
                     }
 
-                    String[] parts = line.split(" ", 4); // id, title, minute, check 분리
+                    // " | " 기호를 앞뒤 공백 무시하고 분리
+                    String[] parts = line.split("\\s*\\|\\s*");
                     if (parts.length >= 4) {
                         int id = Integer.parseInt(parts[0]);
                         String title = parts[1];
