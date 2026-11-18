@@ -29,8 +29,10 @@ public class Record {
 
     @Override
     public String toString() {
-        String str = "  ";
-        str += this.id + " " + this.title + " " + this.miniute + " " + this.check;
-        return str;
+        return String.format("%-7d %-8s %-12d %-10b",
+                this.id,
+                this.title,
+                this.miniute,
+                this.check);
     }
 }
