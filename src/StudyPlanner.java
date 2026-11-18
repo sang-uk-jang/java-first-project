@@ -82,6 +82,9 @@ public class StudyPlanner {
             day = Integer.parseInt(result[2]);
         }
         CalFile findCalFile = fileIO.fileRead(year, month, day);
+        if(findCalFile == null){
+            return;
+        }
         ui.printDailyView(findCalFile);
     }
 
