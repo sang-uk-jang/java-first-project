@@ -91,7 +91,7 @@ public class StudyPlanner {
         int day = 0;
         String content = null;
         boolean check=false;
-        while(check){
+        while(!check){
             System.out.print("일정을 수정할 날짜를 입력하세요(예시 2026-11-16) : ");
             scan = new Scanner(System.in);
             String input = scan.next();
@@ -108,7 +108,7 @@ public class StudyPlanner {
 
         CalFile c1 = fileIO.fileRead(year,month,day);
         if(c1 == null){
-            System.out.println("해당 나짜의 일정이 없습니다.");
+            System.out.println("해당 날짜의 일정이 없습니다.");
             return;
         }
         ui.printDailyView(c1);
@@ -135,7 +135,7 @@ public class StudyPlanner {
             modifyRecord.setCheck(goal);
             c1.DoList.set(choice, modifyRecord);
             ui.printDailyView(c1);
-            System.out.print("이렇게 수정하시겠습까?(Y/N) : ");
+            System.out.print("이렇게 수정하시겠습니까?(Y/N) : ");
             String modifyInput = scan.next();
             if(modifyInput.equals("Y")){
                 boolean writeCheck = IO.writeRecords(c1);
