@@ -3,8 +3,13 @@ import java.time.YearMonth;
 import java.util.Scanner;
 
 public class UI {
-    public StudyPlanner SP = new StudyPlanner();
-    public UI() {}
+    private final Scanner scanner;
+    public final StudyPlanner SP;
+
+    public UI() {
+        scanner = new Scanner(System.in);
+        SP = new StudyPlanner(scanner, this);
+    }
     public void showMenu(){
         while(true){
             int year = YearMonth.now().getYear();
@@ -35,8 +40,8 @@ public class UI {
             System.out.println();
             System.out.println("메뉴 : 1. 일정 생성, 2. 일정 삭제, 3. 일정 수정, 4. 일정 조회, 5. 종료");
             System.out.print("입력 : ");
-            Scanner scanner = new Scanner(System.in);
             int choice = scanner.nextInt();
+            scanner.nextLine();
             switch (choice){
                 case 1 -> SP.addRecord();
                 case 2 -> SP.deleteRecord();
@@ -53,8 +58,8 @@ public class UI {
     public void printDailyView(CalFile dayfile) {
         //임시코드
         if(dayfile == null){
-            System.out.println("dayfile이 null입니다.");
-            System.out.println("오류입니다.");
+            System.out.println("해당 날짜의 일정이 없습니다.");
+            return;
         }
         System.out.println();
         System.out.println("===========================================");
@@ -69,8 +74,8 @@ public class UI {
         System.out.println();
         System.out.println("No. \t과목    \t공부 시간    \t상태");
         System.out.println("-------------------------------------------");
-        for(int i=0;i<dayfile.count;i++){
-            System.out.println(dayfile.DoList.get(i).toString());
+        for(Record record : dayfile.DoList){
+            System.out.println(record);
         }
     }
 

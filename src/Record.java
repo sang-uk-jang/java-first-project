@@ -29,7 +29,7 @@ public class Record {
 
     @Override
     public String toString() {
-        return String.format("%-7d %-8s %-12d %-10b",
+        return String.format("%-7d %-8s %-12d %-10s",
                 this.id,
                 this.title,
                 this.miniute,

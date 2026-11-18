@@ -1,15 +1,16 @@
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class StudyPlanner {
 
-    public StudyPlanner() {}
-    public static Scanner scan = new Scanner(System.in);
-    public CalendarManager CM = new CalendarManager();
-    public fileIO IO = new fileIO();
-    public static UI ui = new UI();
+    private final Scanner scan;
+    public final CalendarManager CM = new CalendarManager();
+    public final fileIO IO = new fileIO();
+    private final UI ui;
+
+    public StudyPlanner(Scanner scan, UI ui) {
+        this.scan = scan;
+        this.ui = ui;
+    }
 
     public void addRecord() {
         int year = 0;
@@ -72,8 +73,7 @@ public class StudyPlanner {
         boolean check=false;
         while(!check){
             System.out.print("일정을 확인할 날짜를 입력하세요(예시 2026-11-16) : ");
-            scan = new Scanner(System.in);
-            String input = scan.next();
+            String input = scan.nextLine().trim();
             check = CM.isValidDate(input);
             if(!check){
                 continue;
@@ -94,12 +94,10 @@ public class StudyPlanner {
         int year = 0;
         int month = 0;
         int day = 0;
-        String content = null;
         boolean check=false;
         while(!check){
             System.out.print("일정을 수정할 날짜를 입력하세요(예시 2026-11-16) : ");
-            scan = new Scanner(System.in);
-            String input = scan.next();
+            String input = scan.nextLine().trim();
             check = CM.isValidDate(input);
             if(!check){
                 continue;
@@ -118,40 +116,42 @@ public class StudyPlanner {
         }
         ui.printDailyView(c1);
         System.out.print("수정할 부분을 입력하세요(0 : 일정 기록, 숫자 : 과목, 공부시간, 상태 변경) : ");
-        int choice = scan.nextInt();
+        int choice = Integer.parseInt(scan.nextLine().trim());
         if(choice == 0){
             System.out.print("수정할 일정 기록을 입력하세요 : ");
-            while(scan.hasNext()){
-                content += scan.nextLine();
-                content += "\n";
-            }
-            c1.setContent(content);
+            c1.setContent(scan.nextLine());
         }
         else {
-            Record modifyRecord = c1.DoList.get(choice);
+            int index = choice - 1;
+            if (index < 0 || index >= c1.DoList.size()) {
+                System.out.println("해당 일정을 찾을 수 없습니다.");
+                return;
+            }
+            Record modifyRecord = c1.DoList.get(index);
             System.out.print("과목을 입력하세요 : ");
             String title = scan.nextLine();
             System.out.print("공부 시간을 입력하세요 : ");
-            int minute = scan.nextInt();
+            int minute = Integer.parseInt(scan.nextLine().trim());
             System.out.print("목표를 달성했는지 Y/N로 입력해주세요 : ");
-            String goal = scan.next();
+            String goal = scan.nextLine().trim();
             modifyRecord.setTitle(title);
             modifyRecord.setMiniute(minute);
             modifyRecord.setCheck(goal);
-            c1.DoList.set(choice, modifyRecord);
-            ui.printDailyView(c1);
-            System.out.print("이렇게 수정하시겠습니까?(Y/N) : ");
-            String modifyInput = scan.next();
-            if(modifyInput.equals("Y")){
-                boolean writeCheck = IO.writeRecords(c1);
-                if(writeCheck){
-                    System.out.println("저장 성공");
-                }else {
-                    System.out.println("수정에 실패했습니다. 다시 수정해주세요.");
-                }
+            c1.DoList.set(index, modifyRecord);
+        }
+
+        ui.printDailyView(c1);
+        System.out.print("이렇게 수정하시겠습니까?(Y/N) : ");
+        String modifyInput = scan.nextLine().trim();
+        if(modifyInput.equalsIgnoreCase("Y")){
+            boolean writeCheck = IO.writeRecords(c1);
+            if(writeCheck){
+                System.out.println("저장 성공");
             }else {
-                System.out.println("수정을 취소합니다.");
+                System.out.println("수정에 실패했습니다. 다시 수정해주세요.");
             }
+        }else {
+            System.out.println("수정을 취소합니다.");
         }
     }
 
@@ -165,7 +165,7 @@ public class StudyPlanner {
         while (!check) {
             System.out.print("일정을 삭제할 날짜를 입력하세요(예시 2026-11-16) : ");
             //scan = new Scanner(System.in);
-            String input = scan.next();
+            String input = scan.nextLine().trim();
             check = CM.isValidDate(input);
             if (!check) {
                 System.out.println("짤못된 날짜입니다.다시 입력하세요. ");
@@ -187,7 +187,7 @@ public class StudyPlanner {
 
         System.out.print("전체를 삭제할지 일부만 삭제할지 선택하세요(All/Selected) : ");
 
-        String userInput = scan.next();
+        String userInput = scan.nextLine().trim();
         if (userInput.equals("All")) {
             //ui.printDailyView(IO.fileRead(year, month, day));
 //             dayFile = fileIO.fileRead(year,month,day);
@@ -197,7 +197,7 @@ public class StudyPlanner {
 //            }
             ui.printDailyView(dayFile);
             System.out.print("진짜 삭제 하시겠습니까??(Y/N) : ");
-            String lastInput = scan.next();
+            String lastInput = scan.nextLine().trim();
             if (lastInput.equalsIgnoreCase("Y")) {
                 IO.deleteFile(year, month, day);
                 System.out.println("삭제되었습니다.");
@@ -212,7 +212,7 @@ public class StudyPlanner {
             ui.printDailyView(dayFile);
             //ui.printDailyView(IO.fileRead(year, month, day));
             System.out.print("삭제할 과목의 아이디를 입력해주세요 : ");
-            int id = scan.nextInt();
+            int id = Integer.parseInt(scan.nextLine().trim());
             Record deleteRecord = IO.findRecord(year, month, day, id);
             if(deleteRecord == null) {
                 System.out.println("해당 일정을 찾을 수 없습니다.");
@@ -221,7 +221,7 @@ public class StudyPlanner {
             System.out.println(deleteRecord);
             //deleteRecord.toString();
             System.out.print("위의 과목을 삭제하겠습니까?(Y/N) : ");
-            String rowInput = scan.next();
+            String rowInput = scan.nextLine().trim();
             if (rowInput.equalsIgnoreCase("Y")) {
                 boolean deleteCheck = fileIO.deleterow(year, month, day, id);
                 if (deleteCheck) {
