@@ -150,14 +150,15 @@ public class StudyPlanner {
         int year = 0;
         int month = 0;
         int day = 0;
-        String content = null;
+        //String content = null;
         boolean check = false;
         while (!check) {
             System.out.print("일정을 삭제할 날짜를 입력하세요(예시 2026-11-16) : ");
-            scan = new Scanner(System.in);
+            //scan = new Scanner(System.in);
             String input = scan.next();
             check = CM.isValidDate(input);
             if (!check) {
+                System.out.println("짤못된 날짜입니다.다시 입력하세요. ");
                 continue;
             }
             String[] result = input.split("-");
@@ -166,25 +167,45 @@ public class StudyPlanner {
             day = Integer.parseInt(result[2]);
         }
 
-        System.out.print("전체를 삭제할지 일부만 삭제할지 선택하세요(전체/일부) : ");
+        System.out.print("전체를 삭제할지 일부만 삭제할지 선택하세요(All/Selected) : ");
+
         String userInput = scan.next();
-        if (userInput.equals("전체")) {
-            ui.printDailyView(IO.fileRead(year, month, day));
+        if (userInput.equals("All")) {
+            //ui.printDailyView(IO.fileRead(year, month, day));
+            CalFile dayFile = fileIO.fileRead(year,month,day);
+            if(dayFile == null){
+                System.out.println("해당날짜에 저장된 일정이 없습니다");
+                return;
+            }
+            ui.printDailyView(dayFile);
             System.out.print("진짜 삭제 하시겠습니까??(Y/N) : ");
             String lastInput = scan.next();
-            if (lastInput.equals("Y")) {
+            if (lastInput.equalsIgnoreCase("Y")) {
                 IO.deleteFile(year, month, day);
+                System.out.println("삭제되었습니다.");
             } else
                 System.out.println("삭제를 취소합니다.");
-        } else {
-            ui.printDailyView(IO.fileRead(year, month, day));
+        } else if (userInput.equals("Selected")){
+
+            //ui.printDailyView(IO.fileRead(year, month, day));
+            CalFile dayFile = fileIO.fileRead(year,month,day);
+            if(dayFile == null){
+                System.out.println("해당날짜에 저장된 일정이 없습니다");
+                return;
+            }
+            ui.printDailyView(dayFile);
             System.out.print("삭제할 과목의 아이디를 입력해주세요 : ");
             int id = scan.nextInt();
             Record deleteRecord = IO.findRecord(year, month, day, id);
-            deleteRecord.toString();
+            if(deleteRecord == null) {
+                System.out.println("해당 일정을 찾을 수 없습니다.");
+                return;
+            }
+            System.out.println(deleteRecord);
+            //deleteRecord.toString();
             System.out.print("위의 과목을 삭제하겠습니까?(Y/N) : ");
             String rowInput = scan.next();
-            if (rowInput.equals("Y")) {
+            if (rowInput.equalsIgnoreCase("Y")) {
                 boolean deleteCheck = fileIO.deleterow(year, month, day, id);
                 if (deleteCheck) {
                     System.out.println("삭제 성공");
@@ -194,6 +215,8 @@ public class StudyPlanner {
             } else {
                 System.out.println("삭제를 취소합니다.");
             }
+            }else {
+            System.out.println("잘못된 선택입니다.");
         }
     }
 }
