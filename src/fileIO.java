@@ -26,7 +26,7 @@ public class fileIO {
 
     // 2. CalFile 객체를 받아 txt 파일에 포맷에 맞춰 작성
     public boolean writeRecords(CalFile dayFile) {
-        String dirPath = "/res";
+        String dirPath = "res";
         File dir = new File(dirPath);
         if (!dir.exists()) {
             dir.mkdirs(); // res 폴더가 없으면 생성

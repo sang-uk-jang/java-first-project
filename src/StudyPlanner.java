@@ -12,16 +12,17 @@ public class StudyPlanner {
     public static UI ui = new UI();
 
     public void addRecord() {
-        //scan.nextLine();
         int year = 0;
         int month = 0;
         int day = 0;
-        boolean check=false;
-        while(!check){
+        boolean check = false;
+
+        while (!check) {
             System.out.print("일정을 생성할 날짜를 입력하세요(예시 2026-11-16) : ");
-            String input = scan.next();
+            String input = scan.nextLine().trim(); // nextLine()으로 통일
             check = CM.isValidDate(input);
-            if(!check){
+            if (!check) {
+                System.out.println("올바르지 않은 날짜 형식입니다. 다시 입력해주세요.");
                 continue;
             }
             String[] result = input.split("-");
@@ -29,36 +30,37 @@ public class StudyPlanner {
             month = Integer.parseInt(result[1]);
             day = Integer.parseInt(result[2]);
         }
+
         System.out.print("일정 기록을 입력하세요 : ");
-        String content = scan.nextLine();
-//        while(scan.hasNext()){
-//            content += scan.nextLine();
-//            content += "\n";
-//        }
-        //기록이 여러줄일 경우 입력받는 방법 생각해보기
+        String content = scan.nextLine(); // 이제 정상적으로 입력됨
 
         CalFile c1 = new CalFile(year, month, day, content);
 
-        while(true){
-            scan.nextLine();
+        while (true) {
             System.out.print("과목을 입력하세요 : ");
             String title = scan.nextLine();
+
             System.out.print("공부 시간을 입력하세요(분) : ");
-            int minute = scan.nextInt();
+            int minute = Integer.parseInt(scan.nextLine().trim()); // 버퍼 문제 방지를 위해 nextLine 후 파싱
+
             System.out.print("목표를 달성했는지 Y/N로 입력해주세요 : ");
-            String goal = scan.next();
+            String goal = scan.nextLine().trim();
+
             System.out.print("계속 작성은 Y, 작성 중단은 N을 입력해주세요 : ");
-            String addCheck = scan.next();
+            String addCheck = scan.nextLine().trim();
+
             Record record = new Record(c1.count++, title, minute, goal);
             c1.DoList.add(record);
-            if(addCheck.equals("N")){
+
+            if (addCheck.equalsIgnoreCase("N")) {
                 break;
             }
         }
+
         boolean writeCheck = IO.writeRecords(c1);
-        if(writeCheck){
+        if (writeCheck) {
             System.out.println("저장 완료");
-        }else {
+        } else {
             System.out.println("저장 실패, 다시 입력해주세요");
         }
     }
