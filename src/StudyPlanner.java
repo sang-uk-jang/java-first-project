@@ -68,7 +68,7 @@ public class StudyPlanner {
         int month = 0;
         int day = 0;
         boolean check=false;
-        while(check){
+        while(!check){
             System.out.print("일정을 확인할 날짜를 입력하세요(예시 2026-11-16) : ");
             scan = new Scanner(System.in);
             String input = scan.next();
@@ -91,7 +91,7 @@ public class StudyPlanner {
         int day = 0;
         String content = null;
         boolean check=false;
-        while(check){
+        while(!check){
             System.out.print("일정을 수정할 날짜를 입력하세요(예시 2026-11-16) : ");
             scan = new Scanner(System.in);
             String input = scan.next();
@@ -152,7 +152,7 @@ public class StudyPlanner {
         int day = 0;
         String content = null;
         boolean check = false;
-        while (check) {
+        while (!check) {
             System.out.print("일정을 삭제할 날짜를 입력하세요(예시 2026-11-16) : ");
             scan = new Scanner(System.in);
             String input = scan.next();
