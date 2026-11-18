@@ -152,6 +152,7 @@ public class StudyPlanner {
         int day = 0;
         //String content = null;
         boolean check = false;
+        CalFile dayFile = null;
         while (!check) {
             System.out.print("일정을 삭제할 날짜를 입력하세요(예시 2026-11-16) : ");
             //scan = new Scanner(System.in);
@@ -172,7 +173,7 @@ public class StudyPlanner {
         String userInput = scan.next();
         if (userInput.equals("All")) {
             //ui.printDailyView(IO.fileRead(year, month, day));
-            CalFile dayFile = fileIO.fileRead(year,month,day);
+             dayFile = fileIO.fileRead(year,month,day);
             if(dayFile == null){
                 System.out.println("해당날짜에 저장된 일정이 없습니다");
                 return;
@@ -186,14 +187,13 @@ public class StudyPlanner {
             } else
                 System.out.println("삭제를 취소합니다.");
         } else if (userInput.equals("Selected")){
-
-            //ui.printDailyView(IO.fileRead(year, month, day));
-            CalFile dayFile = fileIO.fileRead(year,month,day);
-            if(dayFile == null){
+            dayFile = fileIO.fileRead(year,month,day);
+            if(dayFile == null) {
                 System.out.println("해당날짜에 저장된 일정이 없습니다");
                 return;
             }
             ui.printDailyView(dayFile);
+            //ui.printDailyView(IO.fileRead(year, month, day));
             System.out.print("삭제할 과목의 아이디를 입력해주세요 : ");
             int id = scan.nextInt();
             Record deleteRecord = IO.findRecord(year, month, day, id);
