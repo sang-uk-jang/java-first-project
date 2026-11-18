@@ -166,6 +166,14 @@ public class StudyPlanner {
             year = Integer.parseInt(result[0]);
             month = Integer.parseInt(result[1]);
             day = Integer.parseInt(result[2]);
+
+            dayFile = fileIO.fileRead(year,month,day);
+            if(dayFile == null){
+                System.out.println("해당날짜에 저장된 일정이 없습니다");
+                check = false;
+                continue;
+            }
+
         }
 
         System.out.print("전체를 삭제할지 일부만 삭제할지 선택하세요(All/Selected) : ");
@@ -173,11 +181,11 @@ public class StudyPlanner {
         String userInput = scan.next();
         if (userInput.equals("All")) {
             //ui.printDailyView(IO.fileRead(year, month, day));
-             dayFile = fileIO.fileRead(year,month,day);
-            if(dayFile == null){
-                System.out.println("해당날짜에 저장된 일정이 없습니다");
-                return;
-            }
+//             dayFile = fileIO.fileRead(year,month,day);
+//            if(dayFile == null){
+//                System.out.println("해당날짜에 저장된 일정이 없습니다");
+//                return;
+//            }
             ui.printDailyView(dayFile);
             System.out.print("진짜 삭제 하시겠습니까??(Y/N) : ");
             String lastInput = scan.next();
@@ -187,11 +195,11 @@ public class StudyPlanner {
             } else
                 System.out.println("삭제를 취소합니다.");
         } else if (userInput.equals("Selected")){
-            dayFile = fileIO.fileRead(year,month,day);
-            if(dayFile == null) {
-                System.out.println("해당날짜에 저장된 일정이 없습니다");
-                return;
-            }
+//            dayFile = fileIO.fileRead(year,month,day);
+//            if(dayFile == null) {
+//                System.out.println("해당날짜에 저장된 일정이 없습니다");
+//                return;
+//            }
             ui.printDailyView(dayFile);
             //ui.printDailyView(IO.fileRead(year, month, day));
             System.out.print("삭제할 과목의 아이디를 입력해주세요 : ");
