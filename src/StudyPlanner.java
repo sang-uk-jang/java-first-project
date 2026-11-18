@@ -107,6 +107,10 @@ public class StudyPlanner {
 
 
         CalFile c1 = fileIO.fileRead(year,month,day);
+        if(c1 == null){
+            System.out.println("해당 나짜의 일정이 없습니다.");
+            return;
+        }
         ui.printDailyView(c1);
         System.out.print("수정할 부분을 입력하세요(0 : 일정 기록, 숫자 : 과목, 공부시간, 상태 변경) : ");
         int choice = scan.nextInt();
