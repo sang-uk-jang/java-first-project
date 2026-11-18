@@ -114,7 +114,7 @@ public class StudyPlanner {
         ui.printDailyView(c1);
         int choice;
         while (true) {
-            choice = readNonNegativeInt("수정할 부분을 입력하세요(0 : 일정 기록, 숫자 : 과목) : ");
+            choice = readNonNegativeInt("수정할 항목을 선택하세요 (일정 기록: 0, 과목: 화면에 표시된 과목 번호) : ");
             if (choice <= c1.DoList.size()) {
                 break;
             }
