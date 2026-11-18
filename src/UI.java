@@ -39,9 +39,7 @@ public class UI {
             }
             System.out.println();
             System.out.println("메뉴 : 1. 일정 생성, 2. 일정 삭제, 3. 일정 수정, 4. 일정 조회, 5. 종료");
-            System.out.print("입력 : ");
-            int choice = scanner.nextInt();
-            scanner.nextLine();
+            int choice = readMenuChoice();
             switch (choice){
                 case 1 -> SP.addRecord();
                 case 2 -> SP.deleteRecord();
@@ -55,6 +53,21 @@ public class UI {
         }
 
     }
+
+    private int readMenuChoice() {
+        while (true) {
+            System.out.print("입력 : ");
+            try {
+                int choice = Integer.parseInt(scanner.nextLine().trim());
+                if (choice >= 1 && choice <= 5) {
+                    return choice;
+                }
+            } catch (NumberFormatException ignored) {
+            }
+            System.out.println("1~5 사이의 숫자를 입력해주세요.");
+        }
+    }
+
     public void printDailyView(CalFile dayfile) {
         //임시코드
         if(dayfile == null){

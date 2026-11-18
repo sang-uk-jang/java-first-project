@@ -32,23 +32,18 @@ public class StudyPlanner {
             day = Integer.parseInt(result[2]);
         }
 
-        System.out.print("일정 기록을 입력하세요 : ");
-        String content = scan.nextLine(); // 이제 정상적으로 입력됨
+        String content = readRequiredString("일정 기록을 입력하세요 : ");
 
         CalFile c1 = new CalFile(year, month, day, content);
 
         while (true) {
-            System.out.print("과목을 입력하세요 : ");
-            String title = scan.nextLine();
+            String title = readRequiredString("과목을 입력하세요 : ");
 
-            System.out.print("공부 시간을 입력하세요(분) : ");
-            int minute = Integer.parseInt(scan.nextLine().trim()); // 버퍼 문제 방지를 위해 nextLine 후 파싱
+            int minute = readPositiveInt("공부 시간을 입력하세요(분) : ");
 
-            System.out.print("목표를 달성했는지 Y/N로 입력해주세요 : ");
-            String goal = scan.nextLine().trim();
+            String goal = readYesNo("목표를 달성했는지 Y/N로 입력해주세요 : ");
 
-            System.out.print("계속 작성은 Y, 작성 중단은 N을 입력해주세요 : ");
-            String addCheck = scan.nextLine().trim();
+            String addCheck = readYesNo("계속 작성은 Y, 작성 중단은 N을 입력해주세요 : ");
 
             Record record = new Record(c1.count++, title, minute, goal);
             c1.DoList.add(record);
@@ -76,6 +71,7 @@ public class StudyPlanner {
             String input = scan.nextLine().trim();
             check = CM.isValidDate(input);
             if(!check){
+                System.out.println("잘못된 날짜입니다. 다시 입력해주세요.");
                 continue;
             }
             String[] result = input.split("-");
@@ -100,6 +96,7 @@ public class StudyPlanner {
             String input = scan.nextLine().trim();
             check = CM.isValidDate(input);
             if(!check){
+                System.out.println("잘못된 날짜입니다. 다시 입력해주세요.");
                 continue;
             }
             String[] result = input.split("-");
@@ -115,25 +112,23 @@ public class StudyPlanner {
             return;
         }
         ui.printDailyView(c1);
-        System.out.print("수정할 부분을 입력하세요(0 : 일정 기록, 숫자 : 과목, 공부시간, 상태 변경) : ");
-        int choice = Integer.parseInt(scan.nextLine().trim());
+        int choice;
+        while (true) {
+            choice = readNonNegativeInt("수정할 부분을 입력하세요(0 : 일정 기록, 숫자 : 과목) : ");
+            if (choice <= c1.DoList.size()) {
+                break;
+            }
+            System.out.println("해당 번호의 일정이 없습니다.");
+        }
         if(choice == 0){
-            System.out.print("수정할 일정 기록을 입력하세요 : ");
-            c1.setContent(scan.nextLine());
+            c1.setContent(readRequiredString("수정할 일정 기록을 입력하세요 : "));
         }
         else {
             int index = choice - 1;
-            if (index < 0 || index >= c1.DoList.size()) {
-                System.out.println("해당 일정을 찾을 수 없습니다.");
-                return;
-            }
             Record modifyRecord = c1.DoList.get(index);
-            System.out.print("과목을 입력하세요 : ");
-            String title = scan.nextLine();
-            System.out.print("공부 시간을 입력하세요 : ");
-            int minute = Integer.parseInt(scan.nextLine().trim());
-            System.out.print("목표를 달성했는지 Y/N로 입력해주세요 : ");
-            String goal = scan.nextLine().trim();
+            String title = readRequiredString("과목을 입력하세요 : ");
+            int minute = readPositiveInt("공부 시간을 입력하세요 : ");
+            String goal = readYesNo("목표를 달성했는지 Y/N로 입력해주세요 : ");
             modifyRecord.setTitle(title);
             modifyRecord.setMiniute(minute);
             modifyRecord.setCheck(goal);
@@ -141,8 +136,7 @@ public class StudyPlanner {
         }
 
         ui.printDailyView(c1);
-        System.out.print("이렇게 수정하시겠습니까?(Y/N) : ");
-        String modifyInput = scan.nextLine().trim();
+        String modifyInput = readYesNo("이렇게 수정하시겠습니까?(Y/N) : ");
         if(modifyInput.equalsIgnoreCase("Y")){
             boolean writeCheck = IO.writeRecords(c1);
             if(writeCheck){
@@ -168,7 +162,7 @@ public class StudyPlanner {
             String input = scan.nextLine().trim();
             check = CM.isValidDate(input);
             if (!check) {
-                System.out.println("짤못된 날짜입니다.다시 입력하세요. ");
+                System.out.println("잘못된 날짜입니다. 다시 입력하세요.");
                 continue;
             }
             String[] result = input.split("-");
@@ -185,10 +179,17 @@ public class StudyPlanner {
 
         }
 
-        System.out.print("전체를 삭제할지 일부만 삭제할지 선택하세요(All/Selected) : ");
+        String userInput;
+        while (true) {
+            System.out.print("전체를 삭제할지 일부만 삭제할지 선택하세요(All/Selected) : ");
+            userInput = scan.nextLine().trim();
+            if (userInput.equalsIgnoreCase("All") || userInput.equalsIgnoreCase("Selected")) {
+                break;
+            }
+            System.out.println("All 또는 Selected를 입력해주세요.");
+        }
 
-        String userInput = scan.nextLine().trim();
-        if (userInput.equals("All")) {
+        if (userInput.equalsIgnoreCase("All")) {
             //ui.printDailyView(IO.fileRead(year, month, day));
 //             dayFile = fileIO.fileRead(year,month,day);
 //            if(dayFile == null){
@@ -196,14 +197,13 @@ public class StudyPlanner {
 //                return;
 //            }
             ui.printDailyView(dayFile);
-            System.out.print("진짜 삭제 하시겠습니까??(Y/N) : ");
-            String lastInput = scan.nextLine().trim();
+            String lastInput = readYesNo("진짜 삭제 하시겠습니까?(Y/N) : ");
             if (lastInput.equalsIgnoreCase("Y")) {
                 IO.deleteFile(year, month, day);
                 System.out.println("삭제되었습니다.");
             } else
                 System.out.println("삭제를 취소합니다.");
-        } else if (userInput.equals("Selected")){
+        } else {
 //            dayFile = fileIO.fileRead(year,month,day);
 //            if(dayFile == null) {
 //                System.out.println("해당날짜에 저장된 일정이 없습니다");
@@ -211,8 +211,7 @@ public class StudyPlanner {
 //            }
             ui.printDailyView(dayFile);
             //ui.printDailyView(IO.fileRead(year, month, day));
-            System.out.print("삭제할 과목의 아이디를 입력해주세요 : ");
-            int id = Integer.parseInt(scan.nextLine().trim());
+            int id = readPositiveInt("삭제할 과목의 아이디를 입력해주세요 : ");
             Record deleteRecord = IO.findRecord(year, month, day, id);
             if(deleteRecord == null) {
                 System.out.println("해당 일정을 찾을 수 없습니다.");
@@ -220,8 +219,7 @@ public class StudyPlanner {
             }
             System.out.println(deleteRecord);
             //deleteRecord.toString();
-            System.out.print("위의 과목을 삭제하겠습니까?(Y/N) : ");
-            String rowInput = scan.nextLine().trim();
+            String rowInput = readYesNo("위의 과목을 삭제하겠습니까?(Y/N) : ");
             if (rowInput.equalsIgnoreCase("Y")) {
                 boolean deleteCheck = fileIO.deleterow(year, month, day, id);
                 if (deleteCheck) {
@@ -232,8 +230,52 @@ public class StudyPlanner {
             } else {
                 System.out.println("삭제를 취소합니다.");
             }
-            }else {
-            System.out.println("잘못된 선택입니다.");
+        }
+    }
+
+    private int readPositiveInt(String message) {
+        while (true) {
+            int number = readNonNegativeInt(message);
+            if (number > 0) {
+                return number;
+            }
+            System.out.println("0보다 큰 숫자를 입력해주세요.");
+        }
+    }
+
+    private int readNonNegativeInt(String message) {
+        while (true) {
+            System.out.print(message);
+            try {
+                int number = Integer.parseInt(scan.nextLine().trim());
+                if (number >= 0) {
+                    return number;
+                }
+            } catch (NumberFormatException ignored) {
+            }
+            System.out.println("0 이상의 숫자를 입력해주세요.");
+        }
+    }
+
+    private String readYesNo(String message) {
+        while (true) {
+            System.out.print(message);
+            String input = scan.nextLine().trim();
+            if (input.equalsIgnoreCase("Y") || input.equalsIgnoreCase("N")) {
+                return input.toUpperCase();
+            }
+            System.out.println("Y 또는 N을 입력해주세요.");
+        }
+    }
+
+    private String readRequiredString(String message) {
+        while (true) {
+            System.out.print(message);
+            String input = scan.nextLine().trim();
+            if (!input.isEmpty()) {
+                return input;
+            }
+            System.out.println("내용을 입력해주세요.");
         }
     }
 }
