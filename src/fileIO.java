@@ -10,13 +10,14 @@ import java.util.Scanner;
 public class fileIO {
 
     // 1. 특정 날짜 파일에서 id로 row(Record)를 찾아 삭제 후 파일 다시 쓰기
-    public static boolean deleterow(int year, int month, int day, int id) {
+    public boolean deleterow(int year, int month, int day, int id) {
         CalFile calFile = fileRead(year, month, day);
         if (calFile == null || calFile.DoList == null) {
             return false;
         }
 
         boolean removed = calFile.DoList.removeIf(record -> record.id == id);
+        calFile.count--;
         if (removed) {
             // 개수가 변경되었으므로 파일 전체를 갱신
             return new fileIO().writeRecords(calFile);
@@ -57,7 +58,7 @@ public class fileIO {
     }
 
     // 3. 날짜로 파일 찾아서 CalFile 반환하기 (띄어쓰기 포함된 content와 " | " 구분자 안전 처리)
-    static CalFile fileRead(int year, int month, int day) {
+    public CalFile fileRead(int year, int month, int day) {
         CalFile readFile = null;
         try {
             File file = new File("res/" + year + " " + month + " " + day + ".txt");

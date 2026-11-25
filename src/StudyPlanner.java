@@ -79,7 +79,7 @@ public class StudyPlanner {
             month = Integer.parseInt(result[1]);
             day = Integer.parseInt(result[2]);
         }
-        CalFile findCalFile = fileIO.fileRead(year, month, day);
+        CalFile findCalFile = IO.fileRead(year, month, day);
         if(findCalFile == null){
             return;
         }
@@ -106,7 +106,7 @@ public class StudyPlanner {
         }
 
 
-        CalFile c1 = fileIO.fileRead(year,month,day);
+        CalFile c1 = IO.fileRead(year,month,day);
         if(c1 == null){
             System.out.println("해당 날짜의 일정이 없습니다.");
             return;
@@ -170,7 +170,7 @@ public class StudyPlanner {
             month = Integer.parseInt(result[1]);
             day = Integer.parseInt(result[2]);
 
-            dayFile = fileIO.fileRead(year,month,day);
+            dayFile = IO.fileRead(year,month,day);
             if(dayFile == null){
                 System.out.println("해당날짜에 저장된 일정이 없습니다");
                 check = false;
@@ -221,7 +221,7 @@ public class StudyPlanner {
             //deleteRecord.toString();
             String rowInput = readYesNo("위의 과목을 삭제하겠습니까?(Y/N) : ");
             if (rowInput.equalsIgnoreCase("Y")) {
-                boolean deleteCheck = fileIO.deleterow(year, month, day, id);
+                boolean deleteCheck = IO.deleterow(year, month, day, id);
                 if (deleteCheck) {
                     System.out.println("삭제 성공");
                 } else {
