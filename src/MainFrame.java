@@ -346,6 +346,7 @@ public class MainFrame extends JFrame {
 
         frame.add(panel, "modifyPanel");
     }
+    private CalFile currentCalFile = null;
 
     private void createPanel() {
         JPanel panel = new JPanel(new BorderLayout(10, 10));
@@ -458,25 +459,43 @@ public class MainFrame extends JFrame {
                     JOptionPane.showMessageDialog(panel, "유효하지 않은 날짜입니다.");
                     return;
                 }
-                CalFile calFile = new CalFile(year, month, day, contentText);
+                if (currentCalFile == null ||
+                        currentCalFile.year != year ||
+                        currentCalFile.month != month ||
+                        currentCalFile.day != day) {
+                    currentCalFile = new CalFile(year, month, day, contentText);
+                } else {
+                    currentCalFile.content = contentText;
+                }
 
                 if (!contentText.isEmpty() || !subjectText.isEmpty() || !timeText.isEmpty()) {
                     int miniute = 0;
-                    if(!timeText.isEmpty()){
-                        try{
+                    if (!timeText.isEmpty()) {
+                        try {
                             miniute = Integer.parseInt(timeText);
-                        }catch (NumberFormatException ex){
-                            JOptionPane.showMessageDialog(panel, "시간을 숙자로 입력해주세요.");
+                        } catch (NumberFormatException ex) {
+                            JOptionPane.showMessageDialog(panel, "시간을 숫자로 입력해주세요.");
                             return;
                         }
                     }
-                    String checkStatus = (goalCheck.isSelected() || continueCheck.isSelected()) ? "Y" : "N";
-                    Record newRecord = new Record(calFile.count, subjectText, miniute, checkStatus);
-                    calFile.DoList.add(newRecord);
-                    calFile.count++;
+
+                    String checkStatus = goalCheck.isSelected() ? "Y" : "N";
+
+                    Record newRecord = new Record(currentCalFile.count, subjectText, miniute, checkStatus);
+                    currentCalFile.DoList.add(newRecord);
+                    currentCalFile.count++;
                 }
-                dayViewPanel(calFile, 0);
-                showPanel("dayViewPanel");
+
+                if (continueCheck.isSelected()) {
+                    subjectField.setText("");
+                    timeField.setText("");
+                    goalCheck.setSelected(false);
+                    subjectField.requestFocus();
+                } else {
+                    dayViewPanel(currentCalFile, 0);
+                    showPanel("dayViewPanel");
+                    currentCalFile = null;
+                }
             }
         });
         cancelButton.addActionListener(new ActionListener() {
