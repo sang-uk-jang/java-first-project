@@ -29,7 +29,7 @@ public class MainFrame extends JFrame {
         modifyPanel();
         searchPanel();
         deletePanel();
-        dayViewPanel(new CalFile(2026,10,10,"수학"), 2);
+        dayViewPanel(new CalFile(2026,10,10,""), 3);
         showPanel("dayViewPanel");
         showPanel("createPanel");
     }
@@ -146,7 +146,6 @@ public class MainFrame extends JFrame {
                         btn.addActionListener(new ActionListener() {
                             @Override
                             public void actionPerformed(ActionEvent e) {
-
                                 if(result.count == 0){
                                     JOptionPane.showMessageDialog(panel,"삭제할 과목 기록이 없습니다, 파일부터 삭제해주세요");
                                     showPanel("firstPanel");
@@ -209,33 +208,112 @@ public class MainFrame extends JFrame {
                 if(model.getRowCount()>0){
                     model = new DefaultTableModel(tableTitle, 0);
                     table.setModel(model);
-                    //모델을 바꿔줄 수 있다.
                 }
                 CalFile searchFile = IO.fileRead(file.year, file.month, file.day);
                 if(searchFile==null){
-                    JOptionPane.showMessageDialog(panel,"조회할 파일이 없습니다.");
+                    JOptionPane.showMessageDialog(panel,"수정할 파일이 없습니다.");
                     showPanel("firstPanel");
                     return;
                 }
                 for(Record record:searchFile.DoList){
                     model.addRow(new String[]{String.valueOf(record.id), record.title, String.valueOf(record.miniute), record.check });
                 }
-                JButton btn = new JButton("돌아가기");
-
-
+                JButton btn = new JButton("일정 기록 수정");
+                JButton btn2 = new JButton("과목 수정");
+                panel2.add(btn);
+                panel2.add(btn2);
                 btn.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        showPanel("firstPanel");
+                        panel2.removeAll();
+                        panel2.setLayout(new FlowLayout());
+                        JLabel label = new JLabel("수정할 일정 기록 입력");
+                        JTextField text = new JTextField(20);
+                        JButton btn3 = new JButton("확인");
+                        panel2.add(label);
+                        panel2.add(text);
+                        panel2.add(btn3);
+                        panel2.revalidate();
+                        panel2.repaint();
+                        btn3.addActionListener(new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                searchFile.content = text.getText();
+                                IO.writeRecords(searchFile);
+                                JOptionPane.showMessageDialog(panel,"일정 기록을 수정했습니다.");
+                                showPanel("firstPanel");
+                                return;
+                            }
+                        });
+
+                    }
+                });
+                btn2.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        panel2.removeAll();
+                        panel2.setLayout(new FlowLayout());
+                        for(Record record : searchFile.DoList){
+                            JButton btn = new JButton(record.id + record.title);
+                            panel2.add(btn);
+                            btn.addActionListener(new ActionListener() {
+                                @Override
+                                public void actionPerformed(ActionEvent e) {
+                                    panel2.removeAll();
+                                    panel2.setLayout(new FlowLayout());
+                                    JLabel title = new JLabel("과목");
+                                    JTextField titleText = new JTextField(5);
+                                    JLabel time = new JLabel("시간");
+                                    JTextField timeText = new JTextField(5);
+                                    JLabel status = new JLabel("상태");
+                                    JTextField statusText = new JTextField(5);
+                                    JButton btn = new JButton("확인");
+                                    panel2.add(title);
+                                    panel2.add(titleText);
+                                    panel2.add(time);
+                                    panel2.add(timeText);
+                                    panel2.add(status);
+                                    panel2.add(statusText);
+                                    panel2.add(btn);
+                                    panel2.revalidate();
+                                    panel2.repaint();
+                                    btn.addActionListener(new ActionListener() {
+                                        @Override
+                                        public void actionPerformed(ActionEvent e) {
+                                            record.title = titleText.getText();
+                                            //if(timeText.getText().)
+                                            try {
+                                                record.miniute = Integer.parseInt(timeText.getText().trim());
+                                            } catch (NumberFormatException a) {
+                                                JOptionPane.showMessageDialog(null, "숫자만 입력해주세요.");
+                                                showPanel("firstPanel");
+                                                return;
+                                            }
+                                            record.check = statusText.getText();
+                                            if(record.check == "Y" || record.check == "N"){
+                                                JOptionPane.showMessageDialog(null, "Y 또는 N만 입력해주세요");
+                                                showPanel("firstPanel");
+                                                return;
+                                            }
+                                            IO.deleterow(searchFile.year, searchFile.month, searchFile.day, record.id);
+                                            IO.writeRecords(searchFile);
+                                            JOptionPane.showMessageDialog(panel,"과목을 수정했습니다.");
+                                            showPanel("firstPanel");
+
+                                        }
+                                    });
+
+
+                                }
+                            });
+                        }
+                        panel2.revalidate();
+                        panel2.repaint();
                     }
                 });
 
-
-
             }
         }
-
-
         panel.add(panel1, "North");
         panel.add(contentLabel, "West");
         panel.add(new JScrollPane(table));
