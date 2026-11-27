@@ -38,12 +38,98 @@ public class MainFrame extends JFrame {
 
     private void deletePanel() {
         //첼맥
-        JPanel panel = new JPanel();
-        //필요한 컴포넌트 선언 및 사용
-        //CalendarManager로 날짜 검증
-        //이벤트 처리
-        //확인 클릭 -> CalFile 객체 생성(DoList == null) -> dayViewPanel(CalFile,1)호출
-        //취소 클릭 -> showPanel(frame, "firstPanel) 호출
+        // 필요한 컴포넌트 선언 및 사용
+        JPanel panel = new JPanel(new BorderLayout(10, 10));
+        panel.setBorder(
+                BorderFactory.createEmptyBorder(20, 20, 20, 20)
+        );
+
+        JLabel titleLabel = new JLabel("일정 삭제");
+        titleLabel.setFont(new Font("맑은 고딕", Font.BOLD, 20));
+        titleLabel.setHorizontalAlignment(JLabel.CENTER);
+        panel.add(titleLabel, BorderLayout.NORTH);
+
+        JPanel inputPanel = new JPanel(new FlowLayout());
+
+        JLabel dateLabel = new JLabel("날짜 (YYYY-MM-DD)");
+        JTextField dateField = new JTextField(15);
+
+        inputPanel.add(dateLabel);
+        inputPanel.add(dateField);
+
+        panel.add(inputPanel, BorderLayout.CENTER);
+
+        JPanel buttonPanel = new JPanel();
+
+        JButton confirmButton = new JButton("확인");
+        JButton cancelButton = new JButton("취소");
+
+        buttonPanel.add(confirmButton);
+        buttonPanel.add(cancelButton);
+
+        panel.add(buttonPanel, BorderLayout.SOUTH);
+
+        // CalendarManager로 날짜 검증
+        // 이벤트 처리
+        confirmButton.addActionListener(e -> {
+
+            String dateText = dateField.getText().trim();
+
+            if (dateText.isEmpty()) {
+                JOptionPane.showMessageDialog(
+                        panel,
+                        "날짜를 입력해주세요. (예: 2026-11-27)"
+                );
+                return;
+            }
+
+            String[] parts = dateText.split("-");
+
+            if (parts.length != 3) {
+                JOptionPane.showMessageDialog(
+                        panel,
+                        "날짜 형식을 확인해주세요. (예: 2026-11-27)"
+                );
+                return;
+            }
+
+            int year;
+            int month;
+            int day;
+
+            try {
+                year = Integer.parseInt(parts[0]);
+                month = Integer.parseInt(parts[1]);
+                day = Integer.parseInt(parts[2]);
+
+            } catch (NumberFormatException ex) {
+
+                JOptionPane.showMessageDialog(
+                        panel,
+                        "연, 월, 일을 숫자로 입력해주세요."
+                );
+                return;
+            }
+
+            if (!CalendarManager.isValidDate(year, month, day)) {
+                JOptionPane.showMessageDialog(
+                        panel,
+                        "유효하지 않은 날짜입니다."
+                );
+                return;
+            }
+
+            // 확인 클릭 -> CalFile 객체 생성 -> dayViewPanel(CalFile, 1) 호출
+            CalFile calFile = new CalFile(year, month, day, "");
+
+            dayViewPanel(calFile, 1);
+            showPanel("dayViewPanel");
+        });
+
+        // 취소 클릭 -> showPanel("firstPanel") 호출
+        cancelButton.addActionListener(e -> {
+            showPanel("firstPanel");
+        });
 
         frame.add(panel, "deletePanel");
     }
@@ -326,11 +412,39 @@ public class MainFrame extends JFrame {
     private void searchPanel() {
         //첼맥
         JPanel panel = new JPanel();
-        //필요한 컴포넌트 선언 및 사용
-        //CalendarManager로 날짜 검증
-        //이벤트 처리
-        //확인 클릭 -> CalFile 객체 생성(DoList == null) -> dayViewPanel(CalFile,2)호출
-        //취소 클릭 -> showPanel(frame, "firstPanel) 호출
+        panel.setLayout(new GridLayout(4, 1, 10, 10));
+
+        JLabel titleLabel = new JLabel("일정 조회");
+        JLabel dateLabel = new JLabel("조회할 날짜를 입력하세요 (YYYY-MM-DD)");
+
+        JTextField dateField = new JTextField();
+
+        JButton confirmButton = new JButton("확인");
+        JButton cancelButton = new JButton("취소");
+
+        panel.add(titleLabel);
+        panel.add(dateLabel);
+        panel.add(dateField);
+        panel.add(confirmButton);
+        panel.add(cancelButton);
+
+        // 확인 버튼 이벤트
+        confirmButton.addActionListener(e -> {
+            String date = dateField.getText();
+
+            if (date.isEmpty()) {
+                JOptionPane.showMessageDialog(panel, "날짜를 입력하세요.");
+                return;
+            }
+
+            // 날짜 확인 후 조회 처리
+            // TODO: CalendarManager 날짜 검증 및 조회 기능 연결
+        });
+
+        // 취소 버튼 이벤트
+        cancelButton.addActionListener(e -> {
+            showPanel("FirstPanel");
+        });
 
         frame.add(panel, "searchPanel");
     }
@@ -338,11 +452,39 @@ public class MainFrame extends JFrame {
     private void modifyPanel() {
         //첼맥
         JPanel panel = new JPanel();
-        //필요한 컴포넌트 선언 및 사용
-        //CalendarManager로 날짜 검증
-        //이벤트 처리
-        //확인 클릭 -> CalFile 객체 생성(DoList == null) -> dayViewPanel(CalFile,3)호출
-        //취소 클릭 -> showPanel(frame, "firstPanel) 호출
+        panel.setLayout(new GridLayout(5, 1, 10, 10));
+
+        JLabel titleLabel = new JLabel("일정 수정");
+        JLabel dateLabel = new JLabel("수정할 날짜를 입력하세요 (YYYY-MM-DD)");
+
+        JTextField dateField = new JTextField();
+
+        JButton confirmButton = new JButton("확인");
+        JButton cancelButton = new JButton("취소");
+
+        panel.add(titleLabel);
+        panel.add(dateLabel);
+        panel.add(dateField);
+        panel.add(confirmButton);
+        panel.add(cancelButton);
+
+        // 확인 버튼 이벤트
+        confirmButton.addActionListener(e -> {
+            String date = dateField.getText();
+
+            if (date.isEmpty()) {
+                JOptionPane.showMessageDialog(panel, "날짜를 입력하세요.");
+                return;
+            }
+
+            // 날짜 확인 후 수정 처리
+            // TODO: CalendarManager 날짜 검증 및 수정 기능 연결
+        });
+
+        // 취소 버튼 이벤트
+        cancelButton.addActionListener(e -> {
+            showPanel("FirstPanel");
+        });
 
         frame.add(panel, "modifyPanel");
     }
