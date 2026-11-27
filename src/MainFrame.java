@@ -31,6 +31,7 @@ public class MainFrame extends JFrame {
         deletePanel();
         dayViewPanel(new CalFile(2026,10,10,"수학"), 2);
         showPanel("dayViewPanel");
+        showPanel("createPanel");
     }
 
     private void deletePanel() {
@@ -79,7 +80,7 @@ public class MainFrame extends JFrame {
                     table.setModel(model);
                     //모델을 바꿔줄 수 있다.
                 }
-                file.DoList.add(new Record(1, "2", 3, "true"));
+                //file.DoList.add(new Record(1, "2", 3, "true"));
                 for(Record record:file.DoList){
                     model.addRow(new String[]{String.valueOf(record.id), record.title, String.valueOf(record.miniute), record.check });
                 }
@@ -267,18 +268,146 @@ public class MainFrame extends JFrame {
     }
 
     private void createPanel() {
-        //윤퓨
-        JPanel panel = new JPanel();
+        JPanel panel = new JPanel(new BorderLayout(10, 10));
+        panel.setBorder(
+                BorderFactory.createEmptyBorder(20, 20, 20, 20)
+        );
+
+        JLabel titleLabel = new JLabel("일정생성");
+        titleLabel.setFont(new Font("맑은 고딕", Font.BOLD, 20));
+        titleLabel.setHorizontalAlignment(JLabel.CENTER);
+        panel.add(titleLabel, BorderLayout.NORTH);
+        JPanel inputPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(8, 8, 8, 8);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        inputPanel.add(new JLabel("날짜"), gbc);
+
+        JTextField dateField = new JTextField(15);
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        inputPanel.add(dateField, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        inputPanel.add(new JLabel("기록"), gbc);
+
+        JTextArea recordArea = new JTextArea(3, 15);
+        recordArea.setLineWrap(true);
+        recordArea.setWrapStyleWord(true);
+
+        JScrollPane scrollPane = new JScrollPane(recordArea);
+
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        inputPanel.add(scrollPane, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        inputPanel.add(new JLabel("과목"), gbc);
+
+        JTextField subjectField = new JTextField(15);
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        inputPanel.add(subjectField, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        inputPanel.add(new JLabel("시간"), gbc);
+
+        JTextField timeField = new JTextField(15);
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        inputPanel.add(timeField, gbc);
+
+        JPanel checkPanel = new JPanel();
+        checkPanel.setLayout(
+                new BoxLayout(checkPanel, BoxLayout.Y_AXIS)
+        );
+
+        JCheckBox goalCheck = new JCheckBox("목표");
+        JCheckBox continueCheck = new JCheckBox("계속");
+        checkPanel.add(goalCheck);
+        checkPanel.add(continueCheck);
+
+        JPanel centerPanel = new JPanel(new BorderLayout());
+        centerPanel.add(inputPanel, BorderLayout.CENTER);
+        centerPanel.add(checkPanel, BorderLayout.EAST);
+        panel.add(centerPanel, BorderLayout.CENTER);
+
+        JPanel buttonPanel = new JPanel();
+        JButton confirmButton = new JButton("확인");
+        JButton cancelButton = new JButton("취소");
+        buttonPanel.add(confirmButton);
+        buttonPanel.add(cancelButton);
+        panel.add(buttonPanel, BorderLayout.SOUTH);
 
 
-        frame.add(panel, "createPanel");
-        //필요한 컴포넌트 선언 및 사용
-        //CalendarManager로 날짜 검증
-        //이벤트 처리
-        //날짜랑 record 받아서 Calfile 객체 생성 (record 받을 때 count++ 해줘야 합니다)
-        //확인 클릭 -> Calfile 객체 생성 후 -> dayViewPanel(Calfile,0) 호출
-        //취소 클릭 -> showPanel(frame, "firstPanel) 호출
+        confirmButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String dateText = dateField.getText();
+                String contentText = recordArea.getText();
+                String subjectText = subjectField.getText();
+                String timeText = timeField.getText();
+
+                if (dateText.isEmpty()) {
+                    JOptionPane.showMessageDialog(panel, "날짜를 입력해주세요. (예: 2026-11-27)");
+                    return;
+                }
+
+                String[] parts = dateText.split("-");
+                if (parts.length != 3) {
+                    JOptionPane.showMessageDialog(panel, "날짜 형식을 확인해주세요. (예: 2026-11-27)");
+                    return;
+                }
+
+                int year, month, day;
+                try {
+                    year = Integer.parseInt(parts[0]);
+                    month = Integer.parseInt(parts[1]);
+                    day = Integer.parseInt(parts[2]);
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(panel, "연, 월, 일을 숫자로 입력해주세요.");
+                    return;
+                }
+                if (!CalendarManager.isValidDate(year, month, day)) {
+                    JOptionPane.showMessageDialog(panel, "유효하지 않은 날짜입니다.");
+                    return;
+                }
+                CalFile calFile = new CalFile(year, month, day, contentText);
+
+                if (!contentText.isEmpty() || !subjectText.isEmpty() || !timeText.isEmpty()) {
+                    int miniute = 0;
+                    if(!timeText.isEmpty()){
+                        try{
+                            miniute = Integer.parseInt(timeText);
+                        }catch (NumberFormatException ex){
+                            JOptionPane.showMessageDialog(panel, "시간을 숙자로 입력해주세요.");
+                            return;
+                        }
+                    }
+                    String checkStatus = (goalCheck.isSelected() || continueCheck.isSelected()) ? "Y" : "N";
+                    Record newRecord = new Record(calFile.count, subjectText, miniute, checkStatus);
+                    calFile.DoList.add(newRecord);
+                    calFile.count++;
+                }
+                dayViewPanel(calFile, 0);
+                showPanel("dayViewPanel");
+            }
+        });
+        cancelButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showPanel("firstPanel");
+            }
+        });
+        frame.add(panel,"createPanel");
     }
+
 
     private void initFirstPanel() {
         //강윤호
