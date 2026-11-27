@@ -33,9 +33,7 @@ public class MainFrame extends JFrame {
         modifyPanel();
         searchPanel();
         deletePanel();
-        dayViewPanel(new CalFile(2026,10,10,""), 3);
-        showPanel("dayViewPanel");
-        showPanel("createPanel");
+        dayViewPanel(new CalFile(2026,10,10,""), 5);
     }
 
     private void deletePanel() {
