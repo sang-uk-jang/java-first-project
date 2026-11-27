@@ -8,7 +8,7 @@ import java.time.format.ResolverStyle;
 public class CalendarManager {
     private static final DateTimeFormatter TIME_FORMAT =  DateTimeFormatter.ofPattern("HH:mm").withResolverStyle(ResolverStyle.STRICT);
 
-    public boolean isValidYear(int year) {
+    public static boolean isValidYear(int year) {
         return year >= 2020 && year <= 2030;
     }
 
@@ -19,18 +19,18 @@ public class CalendarManager {
         return (year % 400 == 0) || (year % 4 == 0 && year % 100 != 0);
     }
 
-    public boolean isValidMonth(int month) {
+    public static boolean isValidMonth(int month) {
         return month >= 1 && month <= 12;
     }
 
-    public int getDaysInMonth(int year, int month) {
+    public static int getDaysInMonth(int year, int month) {
         if (!isValidYear(year) || !isValidMonth(month)) {
             return -1;
         }
         return YearMonth.of(year, month).lengthOfMonth();
     }
 
-    public boolean isValidDay(int year, int month, int day) {
+    public static boolean isValidDay(int year, int month, int day) {
         if (!isValidYear(year) || !isValidMonth(month)) {
             return false;
         }
@@ -39,7 +39,7 @@ public class CalendarManager {
         return day >= 1 && day <= maxDay;
     }
 
-    public boolean isValidDate(int year, int month, int day) {
+    public static boolean isValidDate(int year, int month, int day) {
         return isValidYear(year) &&
                 isValidMonth(month) &&
                 isValidDay(year, month, day);
