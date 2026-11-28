@@ -451,41 +451,73 @@ public class MainFrame extends JFrame {
 
     private void modifyPanel() {
         //첼맥
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(5, 1, 10, 10));
-
+        JPanel panel = new JPanel(new BorderLayout(10, 10));
+        JPanel panel2 = new JPanel();
+        JPanel panel3 = new JPanel();
         JLabel titleLabel = new JLabel("일정 수정");
-        JLabel dateLabel = new JLabel("수정할 날짜를 입력하세요 (YYYY-MM-DD)");
+        titleLabel.setFont(new Font("맑은 고딕", Font.BOLD, 20));
+        titleLabel.setHorizontalAlignment(JLabel.CENTER);
+        panel.add(titleLabel, "North");
+        JLabel dateLabel = new JLabel("날짜 (YYYY-MM-DD)");
 
-        JTextField dateField = new JTextField();
+        JTextField dateField = new JTextField(10);
 
         JButton confirmButton = new JButton("확인");
         JButton cancelButton = new JButton("취소");
 
-        panel.add(titleLabel);
-        panel.add(dateLabel);
-        panel.add(dateField);
-        panel.add(confirmButton);
-        panel.add(cancelButton);
+        panel2.add(dateLabel);
+        panel2.add(dateField);
+        panel3.add(confirmButton);
+        panel3.add(cancelButton);
+        panel.add(panel2, "Center");
+        panel.add(panel3, "South");
 
         // 확인 버튼 이벤트
         confirmButton.addActionListener(e -> {
             String date = dateField.getText();
+            dateField.setText("");
+
 
             if (date.isEmpty()) {
                 JOptionPane.showMessageDialog(panel, "날짜를 입력하세요.");
+            }
+            String[] parts = date.split("-");
+            if (parts.length != 3 && !date.isEmpty()) {
+                JOptionPane.showMessageDialog(panel, "날짜 형식을 확인해주세요. (예: 2026-11-27)");
+                dateField.removeAll();
                 return;
             }
 
-            // 날짜 확인 후 수정 처리
-            // TODO: CalendarManager 날짜 검증 및 수정 기능 연결
+            int year, month, day;
+            try {
+                year = Integer.parseInt(parts[0]);
+                month = Integer.parseInt(parts[1]);
+                day = Integer.parseInt(parts[2]);
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(panel, "연, 월, 일을 숫자로 입력해주세요.");
+                return;
+            }
+            if (!CalendarManager.isValidDate(year, month, day)) {
+                JOptionPane.showMessageDialog(panel, "유효하지 않은 날짜입니다.");
+                return;
+            }
+
+            CalFile readFile = IO.fileRead(year, month, day);
+            if(readFile == null){
+                JOptionPane.showMessageDialog(panel, "저장된 기록이 없습니다.");
+                return;
+            }
+            dayViewPanel(readFile, 3);
+            showPanel("dayViewPanel");
         });
 
         // 취소 버튼 이벤트
-        cancelButton.addActionListener(e -> {
-            showPanel("FirstPanel");
+        cancelButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showPanel("firstPanel");
+            }
         });
-
         frame.add(panel, "modifyPanel");
     }
     private CalFile currentCalFile = null;
